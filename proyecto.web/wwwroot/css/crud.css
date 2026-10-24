@@ -1,0 +1,281 @@
+﻿/* ============================================================
+   crud.css — piezas reutilizables para pantallas de
+   administración (listado + alta/edición): toolbar, tabla,
+   switch de estado y modal de formulario.
+   Se apoya en las variables y componentes de styles.css.
+   ============================================================ */
+
+/* ---------- Toolbar ---------- */
+
+.crud-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+    .crud-toolbar .dash-search {
+        flex: 1;
+        min-width: 220px;
+        max-width: 320px;
+    }
+
+.chip-group {
+    display: flex;
+    gap: 6px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    padding: 3px;
+}
+
+.chip {
+    border: 0;
+    background: transparent;
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-family: var(--font-body);
+    color: var(--text-muted);
+    cursor: pointer;
+}
+
+    .chip.is-active {
+        background: var(--ink);
+        color: var(--text-on-ink);
+    }
+
+.crud-toolbar .btn {
+    width: auto;
+    margin-left: auto;
+}
+
+/* ---------- Tabla ---------- */
+
+.data-table-wrap {
+    overflow-x: auto;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+}
+
+    .data-table th {
+        text-align: left;
+        font-size: 11.5px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--text-muted);
+        font-weight: 500;
+        padding: 0 14px 10px 0;
+        border-bottom: 1px solid var(--line);
+        white-space: nowrap;
+    }
+
+    .data-table td {
+        padding: 13px 14px 13px 0;
+        border-bottom: 1px solid var(--line);
+        vertical-align: middle;
+    }
+
+    .data-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    .data-table tr:hover td {
+        background: rgba(184,134,59,0.04);
+    }
+
+    .data-table .t-primary {
+        font-weight: 500;
+    }
+
+    .data-table .t-muted {
+        color: var(--text-muted);
+        font-size: 12.5px;
+    }
+
+    .data-table .t-actions {
+        text-align: right;
+        white-space: nowrap;
+    }
+
+.table-state {
+    padding: 40px 20px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13.5px;
+}
+
+    .table-state.is-error {
+        color: var(--error);
+    }
+
+/* Botones de icono para acciones de fila */
+.icon-action {
+    width: 30px;
+    height: 30px;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: var(--paper-2);
+    color: var(--text-muted);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-left: 6px;
+}
+
+    .icon-action:hover {
+        color: var(--text);
+        border-color: var(--text-muted);
+    }
+
+    .icon-action svg {
+        width: 14px;
+        height: 14px;
+    }
+
+/* Switch de estado activo/inactivo */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 38px;
+    height: 22px;
+    vertical-align: middle;
+}
+
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+.switch-track {
+    position: absolute;
+    inset: 0;
+    background: var(--line);
+    border-radius: 100px;
+    cursor: pointer;
+    transition: background 150ms ease;
+}
+
+    .switch-track::before {
+        content: '';
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        left: 3px;
+        top: 3px;
+        background: #fff;
+        border-radius: 50%;
+        transition: transform 150ms ease;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.25);
+    }
+
+.switch input:checked + .switch-track {
+    background: var(--success);
+}
+
+    .switch input:checked + .switch-track::before {
+        transform: translateX(16px);
+    }
+
+.switch input:disabled + .switch-track {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.status-label {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    margin-left: 8px;
+    vertical-align: middle;
+}
+
+/* ---------- Modal genérico ---------- */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 48, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 50;
+}
+
+    .modal-overlay.hidden {
+        display: none;
+    }
+
+.modal-panel {
+    background: var(--paper-2);
+    border-radius: 10px;
+    padding: 28px 30px;
+    max-width: 460px;
+    width: 100%;
+    max-height: 88vh;
+    overflow-y: auto;
+}
+
+    .modal-panel h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 20px;
+        margin: 0 0 4px;
+    }
+
+    .modal-panel .card-sub {
+        margin: 0 0 22px;
+    }
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 24px;
+}
+
+    .modal-actions .btn {
+        width: auto;
+    }
+
+.select-fallback-hint {
+    font-size: 12px;
+    color: var(--brass-dark);
+    margin-top: 6px;
+}
+
+select {
+    width: 100%;
+    padding: 11px 13px;
+    font-size: 15px;
+    font-family: var(--font-body);
+    color: var(--text);
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    outline: none;
+}
+
+    select:focus-visible {
+        border-color: var(--brass);
+        box-shadow: 0 0 0 3px rgba(184, 134, 59, 0.18);
+    }
+
+.form-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 14px;
+}
+
+@media (max-width: 480px) {
+    .form-grid-2 {
+        grid-template-columns: 1fr;
+    }
+}

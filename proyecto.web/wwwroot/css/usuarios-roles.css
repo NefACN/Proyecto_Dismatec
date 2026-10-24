@@ -1,0 +1,417 @@
+﻿/* ============================================================
+   usuarios-roles.css — módulo de Gestión de usuarios y roles.
+   Reutiliza los tokens/componentes de styles.css y dashboard.css
+   (variables, .card, .card-head, .badge, .btn, .log-table…).
+   Solo agrega lo que ese módulo necesita: tabs, toolbar, tabla
+   con acciones, diálogos (modales) y toasts.
+   ============================================================ */
+
+/* ---------- Tabs ---------- */
+
+.tabs {
+    display: flex;
+    gap: 4px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 20px;
+}
+
+.tab-btn {
+    appearance: none;
+    background: none;
+    border: none;
+    padding: 10px 16px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+}
+
+    .tab-btn:hover {
+        color: var(--text);
+    }
+
+    .tab-btn.is-active {
+        color: var(--text);
+        font-weight: 600;
+        border-bottom-color: var(--brass);
+    }
+
+.tab-panel {
+    display: none;
+}
+
+    .tab-panel.is-active {
+        display: block;
+    }
+
+/* ---------- Toolbar ---------- */
+
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+    .toolbar .dash-search {
+        max-width: 320px;
+    }
+
+    .toolbar select {
+        padding: 9px 12px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--paper);
+        font-family: var(--font-body);
+        font-size: 13.5px;
+        color: var(--text);
+    }
+
+/* ---------- Tabla con acciones ---------- */
+
+.table-wrap {
+    position: relative;
+    overflow-x: auto;
+}
+
+.log-table td.t-acciones {
+    text-align: right;
+    white-space: nowrap;
+}
+
+.row-actions {
+    display: inline-flex;
+    gap: 6px;
+}
+
+.chip-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    font-size: 11.5px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 100px;
+    background: var(--brass-tint);
+    color: var(--brass-dark);
+    white-space: nowrap;
+}
+
+    .chip.is-muted {
+        background: var(--line);
+        color: var(--text-muted);
+    }
+
+.badge-activo {
+    background: var(--success-tint);
+    color: var(--success);
+}
+
+.badge-inactivo {
+    background: var(--error-tint);
+    color: var(--error);
+}
+
+.empty-state,
+.loading-state {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13.5px;
+    padding: 36px 0;
+}
+
+    .loading-state[hidden],
+    .empty-state[hidden] {
+        display: none;
+    }
+
+/* ---------- Botones icono pequeños dentro de tabla ---------- */
+
+.btn-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 7px;
+    border: 1px solid var(--line);
+    background: var(--paper-2);
+    color: var(--text-muted);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+    .btn-icon svg {
+        width: 15px;
+        height: 15px;
+    }
+
+    .btn-icon:hover {
+        color: var(--text);
+        border-color: var(--brass);
+    }
+
+    .btn-icon.is-danger:hover {
+        color: var(--error);
+        border-color: var(--error);
+    }
+
+/* ---------- Diálogos (modales) ---------- */
+
+dialog.modal {
+    border: none;
+    border-radius: 10px;
+    padding: 0;
+    width: min(560px, calc(100vw - 32px));
+    max-height: calc(100vh - 64px);
+    box-shadow: 0 20px 50px rgba(15, 23, 48, 0.25);
+    background: var(--paper);
+}
+
+    dialog.modal::backdrop {
+        background: rgba(15, 23, 48, 0.45);
+    }
+
+    dialog.modal.is-wide {
+        width: min(720px, calc(100vw - 32px));
+    }
+
+.modal-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--line);
+}
+
+    .modal-head h2 {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: 19px;
+    }
+
+.modal-close {
+    border: none;
+    background: none;
+    font-size: 20px;
+    line-height: 1;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 4px;
+}
+
+.modal-body {
+    padding: 22px 24px;
+    overflow-y: auto;
+    max-height: calc(100vh - 64px - 130px);
+}
+
+.modal-foot {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 16px 24px;
+    border-top: 1px solid var(--line);
+}
+
+/* ---------- Formularios ---------- */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 16px;
+}
+
+    .form-grid .field-full {
+        grid-column: 1 / -1;
+    }
+
+@media (max-width: 560px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.field label {
+    display: block;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 6px;
+}
+
+.field input,
+.field select,
+.field textarea {
+    width: 100%;
+    padding: 9px 11px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--paper);
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    color: var(--text);
+}
+
+    .field input:focus-visible,
+    .field select:focus-visible,
+    .field textarea:focus-visible {
+        outline: none;
+        border-color: var(--brass);
+        box-shadow: 0 0 0 3px rgba(184, 134, 59, 0.18);
+    }
+
+.field .field-hint {
+    margin: 6px 0 0;
+}
+
+.form-error {
+    font-size: 12.5px;
+    color: var(--error);
+    margin-top: 4px;
+    min-height: 16px;
+}
+
+/* ---------- Detalle de usuario ---------- */
+
+.detail-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.detail-avatar {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--text-on-ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 15px;
+    flex: none;
+}
+
+.detail-name {
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.detail-meta {
+    font-size: 12.5px;
+    color: var(--text-muted);
+}
+
+.detail-section {
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+}
+
+    .detail-section h3 {
+        font-size: 13.5px;
+        margin: 0 0 12px;
+    }
+
+.role-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 0;
+    border-top: 1px solid var(--line);
+    font-size: 13px;
+}
+
+    .role-row:first-of-type {
+        border-top: none;
+    }
+
+.role-row__meta {
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+.assign-role-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+}
+
+    .assign-role-row select,
+    .assign-role-row input {
+        padding: 8px 10px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        font-size: 13px;
+        background: var(--paper);
+    }
+
+    .assign-role-row select {
+        flex: 1;
+        min-width: 160px;
+    }
+
+/* ---------- Credenciales (contraseña temporal) ---------- */
+
+.credential-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    background: var(--paper-2);
+    border: 1px dashed var(--line);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin: 14px 0;
+}
+
+.credential-value {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--brass-dark);
+    letter-spacing: 0.02em;
+}
+
+/* ---------- Toasts ---------- */
+
+.toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 100;
+}
+
+.toast {
+    min-width: 240px;
+    max-width: 360px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 13.5px;
+    color: var(--text-on-ink);
+    background: var(--ink);
+    box-shadow: 0 8px 20px rgba(15, 23, 48, 0.25);
+    border-left: 3px solid var(--brass);
+}
+
+    .toast.is-error {
+        border-left-color: var(--error);
+    }
+
+    .toast.is-success {
+        border-left-color: var(--success);
+    }

@@ -1,0 +1,11 @@
+@page
+@model ErrorModel
+<!doctype html>
+<html lang="es">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>No se pudo completar la solicitud · DISMAC</title><link rel="stylesheet" href="/css/styles.css"><link rel="stylesheet" href="/css/app.css"></head>
+<body data-theme="employee"><main class="task-panel"><section class="card"><p class="eyebrow">DISMAC · CIBERSEGURIDAD</p><h1>No pudimos completar esta solicitud.</h1><p>Vuelve a intentarlo en unos minutos. Si el problema continúa, comparte la referencia con el administrador.</p>
+@if (Model.ShowRequestId)
+{
+    <p>Referencia: <code>@Model.RequestId</code></p>
+}
+<a class="btn btn-primary" href="/login.html">Volver al inicio</a></section></main></body></html>

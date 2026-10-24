@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
+    <File Path=".env.example" />
+  </Folder>
+  <Folder Name="/Solution Items/Docker/">
+    <File Path="docker-compose.yml" />
+  </Folder>
+  <Project Path="proyect.application/proyect.application.csproj" Id="d2988d42-8b84-476c-844a-5748e9bb627c" />
+  <Project Path="proyect.domain/proyect.domain.csproj" Id="84480541-1606-4221-bbaf-551b92b5ea38" />
+  <Project Path="proyect.infrastructure/proyect.infrastructure.csproj" Id="878ed6a7-0aad-4a66-be7a-0c245e55c0fb" />
+  <Project Path="proyecto.api/proyecto.api.csproj" />
+  <Project Path="proyecto.web/proyecto.web.csproj" />
+</Solution>
