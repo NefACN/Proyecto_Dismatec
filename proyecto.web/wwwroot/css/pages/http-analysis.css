@@ -1,0 +1,14 @@
+.http-integration-notice { display:flex; gap:1rem; align-items:center; padding:1.2rem; margin-bottom:1.5rem; border:1px solid #263448; border-radius:12px; background:#111c2c; }
+.http-integration-notice>svg { flex-shrink:0; width:24px; height:24px; color:#8bcab9; }
+.http-integration-notice p { margin:.4rem 0 0; color:#a2b2c7; }
+.http-context { display:flex; flex-wrap:wrap; align-items:end; gap:1rem; margin:1.5rem 0; }
+.http-context label { display:grid; gap:.5rem; min-width:180px; flex:1; }
+.http-context p { flex:2; color:#a2b2c7; }
+.http-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1.2rem; }
+#http-content .panel { margin:1.2rem 0; min-width:0; }
+#http-content fieldset { min-width:0; margin:1.2rem 0; padding:1.2rem; border:1px solid #263448; border-radius:12px; }
+#http-content legend { padding:0 .5rem; }
+#http-content [disabled] { cursor:not-allowed; opacity:.65; }
+.http-explainer { display:flex; align-items:center; gap:1rem; color:#e5c38c; }
+.http-explainer svg { width:24px; flex-shrink:0; }
+@media(max-width:760px) { .http-grid { grid-template-columns:1fr; } .http-context { align-items:stretch; } .http-context label { min-width:0; flex-basis:100%; } }
