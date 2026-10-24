@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Seguridad de la cuenta</title>
+    <link rel="stylesheet" href="css/styles.css" /><link rel="stylesheet" href="css/dashboard.css">
+
+    <link rel="stylesheet" href="css/app.css">
+    <script src="/app-config.js"></script>
+    <script type="module" src="js/app.js"></script>
+</head>
+<body class="settings-page" data-page="seguridad-mfa" data-theme="employee" data-title="Seguridad de la cuenta">
+
+    <div class="dash" id="dash"><button class="dash-scrim" id="dash-scrim" aria-label="Cerrar navegación"></button><aside class="dash-sidebar" id="app-sidebar" data-shell-sidebar></aside><div class="dash-main"><header class="dash-topbar" data-shell-header></header>
+
+    <main class="dash-content" id="contenido">
+        <h1 style="font-family:var(--font-display); font-weight:500; font-size:24px; margin:0 0 4px;">Seguridad de la cuenta</h1>
+        <p class="lede">Administra la verificación en dos pasos y tu contraseña.</p>
+
+        <section class="card">
+            <h2>Verificación en dos pasos</h2>
+            <p class="card-sub">Agrega una capa extra de seguridad a tu inicio de sesión.</p>
+
+            <div id="mfa-estado-cargando" class="field-hint">Cargando estado…</div>
+
+            <div id="mfa-estado-bloque" class="hidden">
+                <div class="status-row">
+                    <span>Estado</span>
+                    <span class="pill" id="pill-mfa-habilitado">—</span>
+                </div>
+                <div class="status-row">
+                    <span>App autenticadora configurada</span>
+                    <span class="pill" id="pill-authenticator">—</span>
+                </div>
+                <div class="status-row">
+                    <span>Códigos de recuperación disponibles</span>
+                    <span id="codigos-restantes">—</span>
+                </div>
+
+                <div id="mfa-acciones" style="margin-top:20px;"></div>
+            </div>
+        </section>
+
+        <section class="card hidden" id="card-activar">
+            <h2>Configura tu app autenticadora</h2>
+            <p class="card-sub">Escanea el código QR con Google Authenticator, Authy o una app similar.</p>
+
+            <div class="notice notice-error" id="activar-error" role="alert"></div>
+
+            <div class="qr-block">
+                <canvas id="qr-canvas" width="180" height="180"></canvas>
+                <div>
+                    <p class="field-hint" style="margin-top:0;">¿No puedes escanear? Ingresa esta clave manualmente:</p>
+                    <span class="manual-key" id="clave-manual">—</span>
+                </div>
+            </div>
+
+            <form id="form-confirmar-mfa" novalidate>
+                <div class="field">
+                    <label for="confirmar-codigo">Código de 6 dígitos</label>
+                    <input type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" class="code-input" id="confirmar-codigo" style="max-width:220px;" required />
+                </div>
+                <div class="btn-row" style="max-width:320px;">
+                    <button type="submit" class="btn btn-accent" id="confirmar-submit"><span class="btn-label">Activar</span></button>
+                    <button type="button" class="btn btn-ghost" id="cancelar-activar">Cancelar</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="card hidden" id="card-codigos">
+            <h2>Guarda tus códigos de recuperación</h2>
+            <p class="card-sub">Cada código sirve una sola vez para entrar si pierdes acceso a tu método habitual. Guárdalos en un lugar seguro; no volverán a mostrarse.</p>
+            <div class="code-grid" id="codigos-grid"></div>
+            <button type="button" class="btn btn-ghost" id="codigos-listo" style="max-width:160px;">Ya los guardé</button>
+        </section>
+
+        <section class="card">
+            <h2>Cambiar contraseña</h2>
+            <p class="card-sub">Al cambiarla, se cerrarán las sesiones activas en tus otros dispositivos.</p>
+
+            <div class="notice notice-error" id="password-error" role="alert"></div>
+            <div class="notice notice-success" id="password-exito" role="status">Contraseña actualizada correctamente.</div>
+
+            <form id="form-cambiar-password" novalidate>
+                <div class="field">
+                    <label for="cp-actual">Contraseña actual</label>
+                    <input type="password" id="cp-actual" autocomplete="current-password" required />
+                </div>
+                <div class="field">
+                    <label for="cp-nueva">Contraseña nueva</label>
+                    <input type="password" id="cp-nueva" autocomplete="new-password" minlength="8" required />
+                </div>
+                <div class="field">
+                    <label for="cp-confirmar">Confirma la contraseña nueva</label>
+                    <input type="password" id="cp-confirmar" autocomplete="new-password" minlength="8" required />
+                    <div class="field-error" id="cp-confirmar-error">Las contraseñas no coinciden.</div>
+                </div>
+                <button type="submit" class="btn btn-primary" id="cp-submit" style="max-width:260px;">
+                    <span class="btn-label">Actualizar contraseña</span>
+                </button>
+            </form>
+        </section>
+    </main></div></div>
+
+    <dialog id="modal-password" class="legacy-dialog" aria-labelledby="modal-titulo">
+        <div class="card" style="max-width:380px; width:100%; margin:0;">
+            <h2 id="modal-titulo">Confirma tu contraseña</h2>
+            <p class="card-sub" id="modal-sub">Por seguridad, ingresa tu contraseña actual para continuar.</p>
+            <div class="notice notice-error" id="modal-error" role="alert"></div>
+            <form id="form-modal-password" novalidate>
+                <div class="field">
+                    <label for="modal-password-input">Contraseña actual</label>
+                    <input type="password" id="modal-password-input" autocomplete="current-password" required />
+                </div>
+                <div class="btn-row">
+                    <button type="submit" class="btn btn-primary" id="modal-submit"><span class="btn-label">Confirmar</span></button>
+                    <button type="button" class="btn btn-ghost" id="modal-cancelar">Cancelar</button>
+                </div>
+            </form>
+        </div>
+</dialog>
+
+</body>
+</html>
