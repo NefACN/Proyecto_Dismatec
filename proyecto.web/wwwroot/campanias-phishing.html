@@ -1,0 +1,188 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simulador de Phishing - Dismac</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="stylesheet" href="css/usuarios-roles.css" />
+    <link rel="stylesheet" href="css/app.css">
+    <script src="/app-config.js"></script>
+    <script type="module" src="js/app.js"></script>
+</head>
+<body data-page="campanias-phishing" data-theme="admin" data-title="Simulaciones de phishing">
+
+    <div class="dash" id="dash">
+        <button class="dash-scrim" id="dash-scrim" aria-label="Cerrar navegación"></button>
+
+        <aside class="dash-sidebar" id="app-sidebar" data-shell-sidebar></aside>
+
+        <div class="dash-main">
+            <header class="dash-topbar" data-shell-header></header>
+
+            <main class="dash-content" id="contenido">
+                <p class="lede">Crea campañas, segmenta objetivos y diseña correos trampa para medir el nivel de riesgo interno.</p>
+
+                <div class="tabs" role="tablist">
+                    <button class="tab-btn is-active" data-tab="campanias" type="button" role="tab">Campañas de envío</button>
+                    <button class="tab-btn" data-tab="plantillas" type="button" role="tab">Plantillas de correo</button>
+                </div>
+
+                <section id="panel-campanias" class="tab-panel is-active">
+                    <div class="card">
+                        <div class="card-head">
+                            <div>
+                                <h2>Campañas</h2>
+                                <p class="card-sub">Gestión de simulaciones y objetivos segmentados</p>
+                            </div>
+                            <button class="btn btn-primary" id="btn-nueva-campania" type="button">+ Nueva campaña</button>
+                        </div>
+                        <div class="table-wrap">
+                            <table class="log-table" id="tabla-campanias">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Título</th>
+                                        <th>Plantilla</th>
+                                        <th>Áreas Objetivo</th>
+                                        <th>Estado</th>
+                                        <th>Fecha Inicio</th>
+                                        <th class="t-acciones">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody-campanias">
+                                    <tr><td colspan="7" class="loading-state">Cargando campañas...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="panel-plantillas" class="tab-panel">
+                    <div class="card">
+                        <div class="card-head">
+                            <div>
+                                <h2>Plantillas Base</h2>
+                                <p class="card-sub">Diseña los correos trampa con HTML y variables dinámicas.</p>
+                            </div>
+                            <button class="btn btn-primary" id="btn-nueva-plantilla" type="button">+ Nueva plantilla</button>
+                        </div>
+                        <div class="table-wrap">
+                            <table class="log-table" id="tabla-plantillas">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nombre</th>
+                                        <th>Asunto</th>
+                                        <th>Criticidad</th>
+                                        <th class="t-acciones">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody-plantillas">
+                                    <tr><td colspan="5" class="loading-state">Cargando plantillas...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <dialog class="modal is-wide" id="dialog-campania">
+        <form id="form-campania">
+            <div class="modal-head">
+                <h2>Configurar Nueva Campaña</h2>
+                <button type="button" class="modal-close" data-close-dialog="dialog-campania" aria-label="Cerrar">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="c-titulo">Título de la Campaña</label>
+                        <input type="text" id="c-titulo" required placeholder="Ej: Falso bono navideño 2026" />
+                    </div>
+                    <div class="field">
+                        <label for="c-plantilla">Plantilla de Correo</label>
+                        <select id="c-plantilla" required>
+                            <option value="">Cargando plantillas...</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="c-fecha-inicio">Fecha de Inicio Programada</label>
+                        <input type="datetime-local" id="c-fecha-inicio" required />
+                    </div>
+                    
+                    <div class="field">
+                        <label for="c-fecha-fin">Fecha de Finalización (opcional)</label>
+                        <input type="datetime-local" id="c-fecha-fin" />
+                        <p class="field-hint">Si la dejas vacía, la campaña no expirará automáticamente.</p>
+                    </div>
+                    <div class="field field-full">
+                        <label for="c-areas">Áreas Operativas (Víctimas)</label>
+                        <select id="c-areas" multiple required style="height: 110px;">
+                            <option value="">Cargando áreas...</option>
+                        </select>
+                        <p class="field-hint">Presiona Ctrl (o Cmd en Mac) para seleccionar varias áreas.</p>
+                    </div>
+                </div>
+                <p class="form-error" id="c-error" style="display: none;"></p>
+            </div>
+            <div class="modal-foot">
+                <button type="button" class="btn" data-close-dialog="dialog-campania">Cancelar</button>
+                <button type="submit" class="btn btn-primary" id="c-submit">Guardar Campaña</button>
+            </div>
+        </form>
+    </dialog>
+
+    <dialog class="modal is-wide" id="dialog-plantilla">
+        <form id="form-plantilla">
+            <div class="modal-head">
+                <h2 id="modal-plantilla-titulo">Nueva Plantilla</h2>
+                <button type="button" class="modal-close" data-close-dialog="dialog-plantilla" aria-label="Cerrar">×</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="p-id" />
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="p-nombre">Nombre interno (Para el administrador)</label>
+                        <input type="text" id="p-nombre" required placeholder="Ej: Microsoft365 - Clave caducada" />
+                    </div>
+                    <div class="field">
+                        <label for="p-criticidad">Nivel de Riesgo (Criticidad)</label>
+                        <select id="p-criticidad" required>
+                            <option value="">Cargando niveles...</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="p-categoria">Categoria Educativa</label>
+                        <select id="p-categoria" required>
+                            <option value="">Cargando Categorias..</option>
+                        </select>
+                        <p class="field-hint"> Define que preguntas vera el usuario</p>
+                    </div>
+                    <div class="field field-full">
+                        <label for="p-asunto">Asunto del correo (Lo que leerá la víctima)</label>
+                        <input type="text" id="p-asunto" required placeholder="URGENTE: Acción requerida en tu cuenta" />
+                    </div>
+                    <div class="field field-full">
+                        <label for="p-cuerpo">Cuerpo HTML (Diseño del correo)</label>
+                        <textarea id="p-cuerpo" required rows="10" style="font-family: monospace; font-size:13px;" placeholder="<h1>Hola {{NombreUsuario}}...</h1>"></textarea>
+                        <div class="field-hint" style="margin-top: 8px; background: var(--paper); padding: 10px; border-radius: 6px; border: 1px solid var(--line);">
+                            <strong>Variables mágicas soportadas:</strong><br />
+                            <code>{{NombreUsuario}}</code>: Se reemplaza por el nombre real de la víctima.<br />
+                            <code>{{LinkTrampa}}</code>: Se reemplaza por la URL única de rastreo. (Pon esto en el `href` de tus botones o enlaces falsos).
+                        </div>
+                    </div>
+                </div>
+                <p class="form-error" id="p-error" style="display: none;"></p>
+            </div>
+            <div class="modal-foot">
+                <button type="button" class="btn" data-close-dialog="dialog-plantilla">Cancelar</button>
+                <button type="submit" class="btn btn-primary" id="p-submit">Guardar Plantilla</button>
+            </div>
+        </form>
+    </dialog>
+
+</body>
+</html>
