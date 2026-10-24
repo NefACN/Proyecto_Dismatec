@@ -1,0 +1,184 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/app.css">
+    <script src="/app-config.js"></script>
+    <script type="module" src="js/app.js"></script>
+</head>
+<body data-page="login" data-title="">
+
+    <div class="screen">
+
+        <aside class="brand-panel" aria-hidden="true">
+            <div class="brand-panel__mark">DISMATEC<span>·</span>S.A.</div>
+
+            <div class="brand-panel__figure">
+                <svg viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="120" cy="120" r="92" stroke="#2A3560" stroke-width="1" />
+                    <circle cx="120" cy="120" r="64" stroke="#4A5690" stroke-width="1" />
+                    <circle cx="120" cy="120" r="10" fill="#B8863B" />
+                    <g stroke="#B8863B" stroke-width="2.5" stroke-linecap="round">
+                        <line x1="120" y1="120" x2="120" y2="40" />
+                        <line x1="120" y1="120" x2="176" y2="76" />
+                    </g>
+                    <g stroke="#4A5690" stroke-width="1.5">
+                        <line x1="120" y1="28" x2="120" y2="44" />
+                        <line x1="120" y1="196" x2="120" y2="212" />
+                        <line x1="28" y1="120" x2="44" y2="120" />
+                        <line x1="196" y1="120" x2="212" y2="120" />
+                        <line x1="57" y1="57" x2="68" y2="68" />
+                        <line x1="172" y1="172" x2="183" y2="183" />
+                        <line x1="57" y1="183" x2="68" y2="172" />
+                        <line x1="172" y1="68" x2="183" y2="57" />
+                    </g>
+                </svg>
+            </div>
+
+            <p class="brand-panel__foot">Sistema interno · uso restringido</p>
+        </aside>
+
+        <main class="task-panel">
+            <div class="task-panel__inner">
+
+                <section class="view is-active" id="view-login">
+                    <h1>Inicia sesión</h1>
+                    <p class="lede">Ingresa tu usuario y contraseña para continuar.</p>
+
+                    <div class="notice notice-error" id="login-error" role="alert"></div>
+
+                    <form id="form-login" novalidate>
+                        <div class="field">
+                            <label for="login-usuario">Usuario</label>
+                            <input type="text" id="login-usuario" name="usuario" autocomplete="username" required />
+                            <div class="field-error" id="login-usuario-error">Ingresa tu usuario.</div>
+                        </div>
+
+                        <div class="field">
+                            <label for="login-password">Contraseña</label>
+                            <div class="password-field">
+                                <input type="password" id="login-password" name="password" autocomplete="current-password" required />
+                                <button type="button" class="password-toggle" data-toggle-for="login-password">Ver</button>
+                            </div>
+                            <div class="field-error" id="login-password-error">Ingresa tu contraseña.</div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" id="login-submit">
+                            <span class="btn-label">Iniciar sesión</span>
+                        </button>
+                    </form>
+
+                    <div class="link-row">
+                        <button type="button" class="as-link" id="go-forgot-password">Olvidé mi contraseña</button>
+                    </div>
+                </section>
+
+                <section class="view" id="view-cambio-obligatorio">
+                    <h1>Crea una nueva contraseña</h1>
+                    <p class="lede">Por seguridad debes definir una nueva contraseña antes de continuar.</p>
+
+                    <div class="notice notice-error" id="cambio-error" role="alert"></div>
+
+                    <form id="form-cambio-obligatorio" novalidate>
+                        <div class="field">
+                            <label for="cambio-password-nueva">Contraseña nueva</label>
+                            <div class="password-field">
+                                <input type="password" id="cambio-password-nueva" autocomplete="new-password" required minlength="8" />
+                                <button type="button" class="password-toggle" data-toggle-for="cambio-password-nueva">Ver</button>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="cambio-password-confirmar">Confirma la contraseña</label>
+                            <div class="password-field">
+                                <input type="password" id="cambio-password-confirmar" autocomplete="new-password" required minlength="8" />
+                                <button type="button" class="password-toggle" data-toggle-for="cambio-password-confirmar">Ver</button>
+                            </div>
+                            <div class="field-error" id="cambio-confirmar-error">Las contraseñas no coinciden.</div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" id="cambio-submit">
+                            <span class="btn-label">Guardar y continuar</span>
+                        </button>
+                    </form>
+                </section>
+
+                <section class="view" id="view-mfa-metodo">
+                    <button type="button" class="back-link" id="mfa-volver-login">← Volver</button>
+                    <h1>Verifica tu identidad</h1>
+                    <p class="lede">Elige cómo quieres recibir tu código de verificación.</p>
+
+                    <div class="notice notice-error" id="mfa-metodo-error" role="alert"></div>
+
+                    <div class="method-list" id="mfa-method-list"></div>
+
+                    <div id="mfa-code-block" class="hidden">
+                        <div class="notice notice-info is-visible" id="mfa-code-info"></div>
+
+                        <form id="form-mfa-code" novalidate>
+                            <div class="field">
+                                <label for="mfa-codigo">Código de verificación</label>
+                                <input type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" class="code-input" id="mfa-codigo" required />
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="mfa-code-submit">
+                                <span class="btn-label">Verificar</span>
+                            </button>
+                        </form>
+
+                        <div class="link-row">
+                            <button type="button" class="as-link" id="mfa-reenviar">Reenviar código</button>
+                            <button type="button" class="as-link" id="go-mfa-recovery">Usar código de recuperación</button>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="view" id="view-mfa-recovery">
+                    <button type="button" class="back-link" id="recovery-volver">← Volver a los métodos</button>
+                    <h1>Código de recuperación</h1>
+                    <p class="lede">Ingresa uno de los códigos de recuperación que guardaste al activar la verificación en dos pasos.</p>
+
+                    <div class="notice notice-error" id="recovery-error" role="alert"></div>
+
+                    <form id="form-mfa-recovery" novalidate>
+                        <div class="field">
+                            <label for="recovery-codigo">Código de recuperación</label>
+                            <input type="text" autocomplete="off" class="code-input" style="letter-spacing:0.15em; font-size:16px;" id="recovery-codigo" required />
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="recovery-submit">
+                            <span class="btn-label">Verificar</span>
+                        </button>
+                    </form>
+                </section>
+
+                <section class="view" id="view-forgot">
+                    <button type="button" class="back-link" id="forgot-volver">← Volver a iniciar sesión</button>
+                    <h1>Recupera tu acceso</h1>
+                    <p class="lede">Escribe el correo asociado a tu cuenta y te enviaremos un enlace para restablecer tu contraseña.</p>
+
+                    <div class="notice notice-error" id="forgot-error" role="alert"></div>
+
+                    <form id="form-forgot" novalidate>
+                        <div class="field">
+                            <label for="forgot-email">Correo electrónico</label>
+                            <input type="email" id="forgot-email" autocomplete="email" required />
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="forgot-submit">
+                            <span class="btn-label">Enviar enlace</span>
+                        </button>
+                    </form>
+                </section>
+
+                <section class="view" id="view-forgot-sent">
+                    <h1>Revisa tu correo</h1>
+                    <p class="lede">Si el correo que ingresaste existe en nuestro sistema, te enviamos un enlace para restablecer tu contraseña. El enlace es válido por tiempo limitado.</p>
+                    <button type="button" class="btn btn-ghost" id="forgot-sent-volver">Volver a iniciar sesión</button>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>
