@@ -1,0 +1,294 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestión de usuarios y roles</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="stylesheet" href="css/usuarios-roles.css" />
+    <link rel="stylesheet" href="css/app.css">
+    <script src="/app-config.js"></script>
+    <script type="module" src="js/app.js"></script>
+</head>
+<body data-page="usuarios-roles" data-theme="admin" data-title="Usuarios y roles">
+
+    <div class="dash" id="dash">
+        <button class="dash-scrim" id="dash-scrim" aria-label="Cerrar navegación"></button>
+
+        <aside class="dash-sidebar" id="app-sidebar" data-shell-sidebar></aside>
+
+        <div class="dash-main">
+
+            <header class="dash-topbar" data-shell-header></header>
+
+            <main class="dash-content" id="contenido">
+                <p class="lede">Administra cuentas de acceso, asignación de roles y permisos del sistema.</p>
+
+                <div class="tabs" role="tablist">
+                    <button class="tab-btn is-active" data-tab="usuarios" type="button" role="tab" aria-selected="true">Usuarios</button>
+                    <button class="tab-btn" data-tab="roles" type="button" role="tab" aria-selected="false">Roles</button>
+                </div>
+
+                <section id="panel-usuarios" class="tab-panel is-active">
+                    <div class="card">
+                        <div class="card-head">
+                            <div>
+                                <h2>Usuarios</h2>
+                                <p class="card-sub">Cuentas de acceso al sistema</p>
+                            </div>
+                            <button class="btn btn-primary" id="btn-nuevo-usuario" type="button">+ Nuevo usuario</button>
+                        </div>
+
+                        <div class="toolbar">
+                            <div class="dash-search">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7" /><line x1="21" y1="21" x2="16.6" y2="16.6" /></svg>
+                                <input type="text" id="buscar-usuarios" placeholder="Buscar por usuario, nombre, correo, teléfono…" />
+                            </div>
+                            <select id="filtro-estado-usuarios">
+                                <option value="">Todos los estados</option>
+                                <option value="true">Activos</option>
+                                <option value="false">Inactivos</option>
+                            </select>
+                        </div>
+
+                        <div class="table-wrap">
+                            <table class="log-table" id="tabla-usuarios">
+                                <thead>
+                                    <tr>
+                                        <th>Usuario</th>
+                                        <th>Sucursal / Área</th>
+                                        <th>Roles</th>
+                                        <th>MFA</th>
+                                        <th>Estado</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabla-usuarios-body"></tbody>
+                            </table>
+                            <p class="loading-state" id="usuarios-cargando">Cargando usuarios…</p>
+                            <p class="empty-state" id="usuarios-vacio" hidden>No se encontraron usuarios con esos filtros.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="panel-roles" class="tab-panel">
+                    <div class="card">
+                        <div class="card-head">
+                            <div>
+                                <h2>Roles</h2>
+                                <p class="card-sub">Roles y permisos disponibles en el sistema</p>
+                            </div>
+                            <button class="btn btn-primary" id="btn-nuevo-rol" type="button">+ Nuevo rol</button>
+                        </div>
+
+                        <div class="toolbar">
+                            <select id="filtro-estado-roles">
+                                <option value="">Todos los estados</option>
+                                <option value="true">Activos</option>
+                                <option value="false">Inactivos</option>
+                            </select>
+                        </div>
+
+                        <div class="table-wrap">
+                            <table class="log-table" id="tabla-roles">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Descripción</th>
+                                        <th>Estado</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabla-roles-body"></tbody>
+                            </table>
+                            <p class="loading-state" id="roles-cargando">Cargando roles…</p>
+                            <p class="empty-state" id="roles-vacio" hidden>No se encontraron roles con esos filtros.</p>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <dialog class="modal is-wide" id="dialog-usuario-nuevo">
+        <form id="form-usuario-nuevo" method="dialog">
+            <div class="modal-head">
+                <h2>Nuevo usuario</h2>
+                <button type="button" class="modal-close" data-close-dialog="dialog-usuario-nuevo" aria-label="Cerrar">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="nu-nombre">Nombre</label>
+                        <input type="text" id="nu-nombre" name="nombre" required />
+                    </div>
+                    <div class="field">
+                        <label for="nu-apellido">Apellido</label>
+                        <input type="text" id="nu-apellido" name="apellido" required />
+                    </div>
+                    <div class="field">
+                        <label for="nu-usuario">Nombre de usuario</label>
+                        <input type="text" id="nu-usuario" name="nombreUsuario" required />
+                    </div>
+                    <div class="field">
+                        <label for="nu-email">Correo electrónico</label>
+                        <input type="email" id="nu-email" name="email" required />
+                    </div>
+                    <div class="field">
+                        <label for="nu-telefono">Teléfono</label>
+                        <input type="tel" id="nu-telefono" name="telefono" />
+                    </div>
+                    <div class="field">
+                        <label for="nu-rol">Rol inicial</label>
+                        <select id="nu-rol" name="idRolInicial">
+                            <option value="">Sin rol inicial</option>
+                        </select>
+                    </div>
+                    
+                    <div class="field">
+                        <label for="nu-sucursal">Sucursal</label>
+                        <select id="nu-sucursal" name="idSucursal">
+                            <option value="">Sin sucursal</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="nu-area">Área operativa</label>
+                        <select id="nu-area" name="idArea">
+                            <option value="">Sin área</option>
+                        </select>
+                    </div>
+                </div>
+                <p class="form-error" id="nu-error"></p>
+            </div>
+            <div class="modal-foot">
+                <button type="button" class="btn" data-close-dialog="dialog-usuario-nuevo">Cancelar</button>
+                <button type="submit" class="btn btn-primary" id="nu-submit">Crear usuario</button>
+            </div>
+        </form>
+    </dialog>
+
+    <dialog class="modal is-wide" id="dialog-usuario-detalle">
+        <div class="modal-head">
+            <h2>Detalle de usuario</h2>
+            <button type="button" class="modal-close" data-close-dialog="dialog-usuario-detalle" aria-label="Cerrar">×</button>
+        </div>
+        <div class="modal-body">
+            <div class="detail-head">
+                <div class="detail-avatar" id="dt-avatar">--</div>
+                <div>
+                    <div class="detail-name" id="dt-nombre-completo">—</div>
+                    <div class="detail-meta" id="dt-usuario-meta">—</div>
+                </div>
+            </div>
+
+            <form id="form-usuario-editar">
+                <input type="hidden" id="dt-id" />
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="dt-nombre">Nombre</label>
+                        <input type="text" id="dt-nombre" name="nombre" required />
+                    </div>
+                    <div class="field">
+                        <label for="dt-apellido">Apellido</label>
+                        <input type="text" id="dt-apellido" name="apellido" required />
+                    </div>
+                    <div class="field">
+                        <label for="dt-email">Correo electrónico</label>
+                        <input type="email" id="dt-email" name="email" required />
+                    </div>
+                    <div class="field">
+                        <label for="dt-telefono">Teléfono</label>
+                        <input type="tel" id="dt-telefono" name="telefono" />
+                    </div>
+                    
+                    <div class="field">
+                        <label for="dt-sucursal">Sucursal</label>
+                        <select id="dt-sucursal" name="idSucursal">
+                            <option value="">Sin sucursal</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="dt-area">Área operativa</label>
+                        <select id="dt-area" name="idArea">
+                            <option value="">Sin área</option>
+                        </select>
+                    </div>
+                </div>
+                <p class="form-error" id="dt-error"></p>
+                <div style="display:flex; gap:10px; margin-top:14px;">
+                    <button type="submit" class="btn btn-primary" id="dt-guardar">Guardar cambios</button>
+                    <button type="button" class="btn" id="dt-resetear-password">Resetear contraseña</button>
+                    <button type="button" class="btn" id="dt-toggle-estado">Cambiar estado</button>
+                </div>
+            </form>
+
+            <div class="detail-section">
+                <h3>MFA</h3>
+                <span class="badge" id="dt-mfa-badge">—</span>
+            </div>
+
+            <div class="detail-section">
+                <h3>Roles asignados</h3>
+                <div id="dt-roles-lista"></div>
+
+                <div class="assign-role-row">
+                    <select id="dt-nuevo-rol">
+                        <option value="">Seleccionar rol…</option>
+                    </select>
+                    <input type="date" id="dt-nuevo-rol-fecha-fin" title="Fecha de fin (opcional)" />
+                    <button type="button" class="btn" id="dt-asignar-rol">Asignar</button>
+                </div>
+                <p class="form-error" id="dt-rol-error"></p>
+            </div>
+        </div>
+    </dialog>
+
+    <dialog class="modal" id="dialog-credenciales">
+        <div class="modal-head">
+            <h2>Contraseña temporal generada</h2>
+            <button type="button" class="modal-close" data-close-dialog="dialog-credenciales" aria-label="Cerrar">×</button>
+        </div>
+        <div class="modal-body">
+            <p class="field-hint">Comparte esta contraseña con el usuario por un canal seguro. Deberá cambiarla en su primer inicio de sesión.</p>
+            <div class="credential-box">
+                <span class="credential-value" id="cred-valor">—</span>
+                <button type="button" class="btn-icon" id="cred-copiar" title="Copiar">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="9" width="12" height="12" rx="2" /><path d="M5 15V5a2 2 0 0 1 2-2h10" /></svg>
+                </button>
+            </div>
+        </div>
+        <div class="modal-foot">
+            <button type="button" class="btn btn-primary" data-close-dialog="dialog-credenciales">Listo</button>
+        </div>
+    </dialog>
+
+    <dialog class="modal" id="dialog-rol">
+        <form id="form-rol" method="dialog">
+            <div class="modal-head">
+                <h2 id="rol-titulo">Nuevo rol</h2>
+                <button type="button" class="modal-close" data-close-dialog="dialog-rol" aria-label="Cerrar">×</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="rol-id" />
+                <div class="field" style="margin-bottom:14px;">
+                    <label for="rol-nombre">Nombre</label>
+                    <input type="text" id="rol-nombre" name="nombre" required />
+                </div>
+                <div class="field">
+                    <label for="rol-descripcion">Descripción</label>
+                    <textarea id="rol-descripcion" name="descripcion" rows="3"></textarea>
+                </div>
+                <p class="form-error" id="rol-error"></p>
+            </div>
+            <div class="modal-foot">
+                <button type="button" class="btn" data-close-dialog="dialog-rol">Cancelar</button>
+                <button type="submit" class="btn btn-primary" id="rol-submit">Guardar rol</button>
+            </div>
+        </form>
+    </dialog>
+
+    <div class="toast-container" id="toast-container"></div>
+
+</body>
+</html>
