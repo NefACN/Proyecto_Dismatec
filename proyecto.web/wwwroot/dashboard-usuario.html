@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mi aprendizaje · DISMAC</title>
+    <link rel="stylesheet" href="css/styles.css"><link rel="stylesheet" href="css/dashboard.css"><link rel="stylesheet" href="css/app.css">
+    <script src="/app-config.js"></script><script type="module" src="js/app.js"></script>
+</head>
+<body data-page="dashboard-usuario" data-theme="employee" data-title="Mi aprendizaje">
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<div class="dash" id="dash"><button class="dash-scrim" id="dash-scrim" aria-label="Cerrar navegación"></button>
+<aside class="dash-sidebar" id="app-sidebar" data-shell-sidebar></aside>
+<div class="dash-main"><header class="dash-topbar" data-shell-header></header>
+<main class="dash-content learning-content" id="contenido">
+    <section class="learning-heading"><div><p class="eyebrow">TU MEJOR DEFENSA ES LO QUE SABES</p><h1>Hola, <span id="welcome-name">colaborador</span><span class="accent-dot">.</span></h1><p>Un poco de práctica hoy. Más confianza para mañana.</p></div><span class="branch-tag" id="learning-branch">Mi aprendizaje</span></section>
+    <div id="learning-error" class="page-notice hidden" role="alert"></div>
+    <section class="learning-hero"><div class="learning-hero-copy"><span class="hero-tag"><span data-icon="shield"></span>CRECE COMO DEFENSOR DIGITAL</span><h2>La seguridad empieza<br>contigo.</h2><p>Aprende a identificar engaños, protege tu información y suma puntos con cada reto.</p><a href="#cursos" class="btn learning-cta">Explorar mis retos <span data-icon="arrow"></span></a></div><div class="hero-emblem" aria-hidden="true"><div class="emblem-orbit orbit-one"></div><div class="emblem-orbit orbit-two"></div><span class="emblem-spark spark-one">+</span><span class="emblem-spark spark-two">+</span><div class="emblem-core"><span data-icon="shield"></span></div><span class="emblem-caption">APRENDER ES PROTEGER</span></div></section>
+    <section class="learning-stats" aria-label="Mi progreso"><article><span class="stat-symbol" data-icon="activity"></span><div><small>Mi CyberScore</small><strong id="learning-score">—</strong><span>Puntos acumulados</span></div></article><article><span class="stat-symbol gold" data-icon="trophy"></span><div><small>Mis insignias</small><strong id="learning-badges-count">—</strong><span>Logros desbloqueados</span></div></article><article><span class="stat-symbol violet" data-icon="book"></span><div><small>Temas practicados</small><strong id="learning-practiced">—</strong><span id="learning-progress-caption">Consultando tus cursos</span></div></article></section>
+    <section class="learning-columns"><div class="learning-primary">
+        <section id="cursos" class="panel"><div class="panel-heading"><div><p class="eyebrow">ENTRENA TU CRITERIO</p><h2>Tu próximo reto</h2></div><span id="courses-count" class="subtle-tag">Cursos</span></div><p class="section-description">Cuestionarios breves para reconocer amenazas reales. Tú eliges por dónde empezar.</p><div id="learning-courses" class="course-list"><p class="empty-state">Preparando tus retos…</p></div></section>
+        <section id="logros" class="panel"><div class="panel-heading"><div><p class="eyebrow">CADA PASO CUENTA</p><h2>Tu colección de logros</h2></div><span data-icon="star"></span></div><div id="learning-badges" class="achievement-grid"><p class="empty-state">Buscando tus insignias…</p></div></section>
+        <section class="panel"><div class="panel-heading"><div><p class="eyebrow">LO QUE YA APRENDISTE</p><h2>Capacitaciones de simulaciones</h2></div></div><div id="learning-history"><p class="empty-state">Cargando tu historial…</p></div></section>
+    </div><aside class="learning-secondary">
+        <section class="panel ranking-panel"><div class="panel-heading"><div><p class="eyebrow">APRENDEMOS EN EQUIPO</p><h2>Ranking de sucursales</h2></div><span data-icon="trophy"></span></div><p class="section-description">Promedio de CyberScore de los empleados activos.</p><ol class="ranking-list" id="learning-ranking"><li class="empty-state">Cargando clasificación…</li></ol></section>
+        <section class="tip-card"><span class="tip-label"><span data-icon="shield"></span>UN CONSEJO PARA HOY</span><h3>La urgencia puede ser una trampa.</h3><p>Antes de abrir un enlace, verifica el remitente. Si te presionan para actuar rápido, detente y confirma por otro canal.</p><a href="#cursos" class="text-action">Ponlo en práctica <span data-icon="arrow"></span></a></section>
+        <section class="learning-note"><span data-icon="check"></span><p>No necesitas ser experto.<br><strong>Solo seguir aprendiendo.</strong></p></section>
+    </aside></section>
+    <footer class="page-footer"><span>DISMAC · Seguridad que construimos juntos</span><span>A tu ritmo. Cada día un poco mejor.</span></footer>
+</main></div></div>
+<dialog class="modal learning-dialog" id="dialog-curso" aria-labelledby="course-title"><div class="modal-head"><div><p class="eyebrow">RETO DE SEGURIDAD</p><h2 id="course-title">Tu cuestionario</h2></div><button type="button" class="modal-close" data-close-dialog="dialog-curso" aria-label="Cerrar cuestionario">×</button></div><form id="course-form"><div class="modal-body"><p id="course-instructions">Selecciona una respuesta por pregunta.</p><div id="course-questions"></div><div id="course-feedback" class="quiz-feedback hidden" role="status" aria-live="polite"></div></div><div class="modal-foot"><button type="button" class="btn btn-ghost" data-close-dialog="dialog-curso">Continuar después</button><button type="submit" class="btn btn-primary" id="course-submit" disabled>Comprobar respuestas</button></div></form></dialog>
+</body></html>
