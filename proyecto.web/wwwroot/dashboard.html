@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Centro de control · DISMAC</title>
+    <link rel="stylesheet" href="css/styles.css"><link rel="stylesheet" href="css/dashboard.css"><link rel="stylesheet" href="css/app.css">
+    <script src="/app-config.js"></script><script type="module" src="js/app.js"></script>
+</head>
+<body data-page="dashboard" data-theme="admin" data-title="Centro de control">
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<div class="dash" id="dash"><button class="dash-scrim" id="dash-scrim" aria-label="Cerrar navegación"></button>
+<aside class="dash-sidebar" id="app-sidebar" data-shell-sidebar></aside>
+<div class="dash-main"><header class="dash-topbar" data-shell-header></header>
+<main class="dash-content" id="contenido">
+    <section class="page-heading"><div><p class="eyebrow">VISIBILIDAD PARA ACTUAR</p><h1>Centro de control<span class="accent-dot">.</span></h1><p>Una visión de las personas y la seguridad de tu organización.</p></div><button class="btn btn-ghost compact" id="refresh-dashboard"><span data-icon="refresh"></span>Actualizar</button></section>
+    <div id="dashboard-error" class="page-notice hidden" role="alert"></div>
+    <div class="snapshot-line"><span class="status-light"></span><span id="snapshot-time" aria-live="polite">Conectando con el sistema…</span><span class="snapshot-source">DATOS DE TU ORGANIZACIÓN</span></div>
+    <section class="metric-grid" aria-label="Indicadores de seguridad">
+        <article class="metric"><div class="metric-top"><span>Usuarios activos</span><span data-icon="users"></span></div><strong id="stat-users">—</strong><small id="stat-users-caption">Consultando usuarios</small></article>
+        <article class="metric"><div class="metric-top"><span>Sucursales activas</span><span data-icon="building"></span></div><strong id="stat-branches">—</strong><small>Alcance de la organización</small></article>
+        <article class="metric"><div class="metric-top"><span>Campañas registradas</span><span data-icon="mail"></span></div><strong id="stat-campaigns">—</strong><small>Simulaciones de phishing</small></article>
+        <article class="metric metric-warning"><div class="metric-top"><span>Clics en simulaciones</span><span data-icon="alert"></span></div><strong id="stat-clicks">—</strong><small id="stat-clicks-caption">Consultando resultados</small></article>
+    </section>
+    <section class="overview-grid">
+        <article class="panel"><div class="panel-heading"><div><p class="eyebrow">ACTIVIDAD DEL SISTEMA</p><h2>El pulso de los últimos 7 días</h2></div><span class="subtle-tag">AUDITORÍA</span></div>
+            <div class="chart-legend"><span><i></i>Eventos exitosos</span><span><i class="warning"></i>No completados</span></div>
+            <div class="activity-chart" id="activity-chart" role="img" aria-label="Cargando actividad de auditoría"><p class="empty-state">Cargando actividad…</p></div>
+            <p class="panel-caption">Muestra de hasta 200 eventos recientes. Los resultados fallidos no implican una amenaza confirmada.</p>
+        </article>
+        <article class="panel"><div class="panel-heading"><div><p class="eyebrow">ATENCIÓN Y PREVENCIÓN</p><h2>Prioridades de seguridad</h2></div><span data-icon="shield"></span></div><div id="security-priorities" class="priority-list" aria-live="polite"><p class="empty-state">Consultando el estado de seguridad…</p></div><a class="text-action" href="usuarios-roles.html">Revisar usuarios <span data-icon="arrow"></span></a></article>
+    </section>
+    <section class="panel" id="actividad"><div class="panel-heading"><div><p class="eyebrow">TRAZABILIDAD</p><h2>Registro de eventos</h2></div><span id="audit-count" class="subtle-tag">Cargando</span></div>
+        <form class="audit-filters" id="audit-filters"><label>Acción<select id="audit-action"><option value="">Todas las acciones</option><option value="Login">Inicio de sesión</option><option value="LoginFallido">Inicio fallido</option><option value="CrearUsuario">Usuario creado</option><option value="CambioPassword">Cambio de contraseña</option><option value="AsignarRol">Rol asignado</option></select></label><label>Desde<input type="date" id="audit-from"></label><label>Hasta<input type="date" id="audit-to"></label><button class="btn btn-ghost compact" type="submit">Aplicar</button><button class="text-action" id="audit-clear" type="button">Limpiar</button></form>
+        <div class="table-scroll"><table class="event-table"><thead><tr><th>Fecha y hora</th><th>Usuario</th><th>Evento</th><th>Origen</th><th>Resultado</th></tr></thead><tbody id="audit-body"><tr><td colspan="5" class="table-state">Cargando eventos…</td></tr></tbody></table></div>
+        <div class="table-pagination"><span id="audit-page" aria-live="polite">Página 1</span><div><button class="btn btn-ghost compact" id="audit-prev" disabled>Anterior</button><button class="btn btn-ghost compact" id="audit-next" disabled>Siguiente</button></div></div>
+    </section>
+    <section class="quick-grid" aria-label="Accesos rápidos"><a href="campanias-phishing.html"><span data-icon="mail"></span><div><strong>Diseña una simulación</strong><small>Convierte el riesgo en aprendizaje</small></div><span data-icon="arrow"></span></a><a href="preguntas-admin.html"><span data-icon="book"></span><div><strong>Prepara nuevos retos</strong><small>Gestiona tu banco de preguntas</small></div><span data-icon="arrow"></span></a><a href="usuarios-roles.html"><span data-icon="users"></span><div><strong>Gestiona tu equipo</strong><small>Usuarios, permisos y protección</small></div><span data-icon="arrow"></span></a></section>
+    <footer class="page-footer"><span>DISMAC · Seguridad que construimos juntos</span><span>Conoce. Previene. Protege.</span></footer>
+</main></div></div>
+</body></html>
