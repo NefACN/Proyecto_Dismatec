@@ -1,0 +1,27 @@
+
+        .opcion-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 10px;
+            background: var(--paper);
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid var(--line);
+        }
+
+            .opcion-row input[type="text"] {
+                flex: 1;
+            }
+
+            .opcion-row.correcta {
+                border-color: #22c55e;
+                background: #f0fdf4;
+            }
+
+        .radio-correcta {
+            transform: scale(1.3);
+            cursor: pointer;
+            margin-left: 5px;
+        }
+    

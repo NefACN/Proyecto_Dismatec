@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Banco de Preguntas - Administrador</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="stylesheet" href="css/pages/preguntas-admin.css">
+    <link rel="stylesheet" href="css/app.css">
+    <script src="/app-config.js"></script>
+    <script type="module" src="js/app.js"></script>
+</head>
+<body data-page="preguntas-admin" data-theme="admin" data-title="Banco de preguntas">
+    <div class="dash" id="dash">
+        <button class="dash-scrim" id="dash-scrim" aria-label="Cerrar navegación"></button>
+
+        <aside class="dash-sidebar" id="app-sidebar" data-shell-sidebar></aside>
+
+        <div class="dash-main">
+            <header class="dash-topbar" data-shell-header></header>
+
+            <main class="dash-content" id="contenido">
+                <div class="card">
+                    <div class="card-head">
+                        <div>
+                            <h2>Repositorio de Conocimiento</h2>
+                            <p class="card-sub">Gestiona las preguntas que aparecerán en los "Teachable Moments" y cursos voluntarios.</p>
+                        </div>
+                        <button class="btn btn-primary" id="btn-nueva-pregunta" type="button">+ Nueva Pregunta</button>
+                    </div>
+                    <div class="table-wrap">
+                        <table class="log-table" id="tabla-preguntas">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Categoría</th>
+                                    <th style="width:40%">Pregunta</th>
+                                    <th>Opciones</th>
+                                    <th class="t-acciones">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody-preguntas">
+                                <tr><td colspan="5" class="loading-state">Cargando preguntas...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <dialog class="modal is-wide" id="dialog-pregunta">
+        <form id="form-pregunta">
+            <div class="modal-head">
+                <h2 id="modal-titulo">Nueva Pregunta</h2>
+                <button type="button" class="modal-close" data-close-dialog="dialog-pregunta">×</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="q-id" />
+
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="q-categoria">Categoría Educativa</label>
+                        <select id="q-categoria" required>
+                            <option value="">Cargando...</option>
+                        </select>
+                    </div>
+
+                    <div class="field field-full">
+                        <label for="q-texto">Texto de la Pregunta</label>
+                        <input type="text" id="q-texto" required placeholder="Ej: ¿Qué detalle en este correo indica que es falso?" />
+                    </div>
+
+                    <div class="field field-full">
+                        <label for="q-explicacion">Explicación Educativa (Teachable Moment)</label>
+                        <textarea id="q-explicacion" required rows="3" placeholder="La realidad es que el remitente no pertenece al dominio oficial..."></textarea>
+                    </div>
+
+                    <div class="field field-full">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                            <label style="margin:0;">Opciones de Respuesta (Marca la correcta)</label>
+                            <button type="button" class="btn" id="btn-agregar-opcion" style="padding: 4px 12px; font-size: 0.85rem;">+ Añadir Opción</button>
+                        </div>
+                        <div id="contenedor-opciones"></div>
+                    </div>
+                </div>
+                <p class="form-error" id="q-error" style="display: none;"></p>
+            </div>
+            <div class="modal-foot">
+                <button type="button" class="btn" data-close-dialog="dialog-pregunta">Cancelar</button>
+                <button type="submit" class="btn btn-primary" id="q-submit">Guardar Pregunta</button>
+            </div>
+        </form>
+    </dialog>
+
+</body>
+</html>
