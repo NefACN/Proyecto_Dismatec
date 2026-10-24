@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Áreas operativas</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="stylesheet" href="css/crud.css" />
+    <link rel="stylesheet" href="css/app.css">
+    <script src="/app-config.js"></script>
+    <script type="module" src="js/app.js"></script>
+</head>
+<body data-page="areas-operativas" data-theme="admin" data-title="Áreas operativas">
+
+    <div class="dash" id="dash">
+        <button class="dash-scrim" id="dash-scrim" aria-label="Cerrar navegación"></button>
+
+        <aside class="dash-sidebar" id="app-sidebar" data-shell-sidebar></aside>
+
+        <div class="dash-main">
+
+            <header class="dash-topbar" data-shell-header></header>
+
+            <main class="dash-content" id="contenido">
+                <p class="lede">Define las áreas operativas y su nivel de criticidad para el monitoreo.</p>
+
+                <div class="notice notice-error" id="page-error" role="alert"></div>
+
+                <div class="card">
+                    <div class="crud-toolbar">
+                        <div class="dash-search">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7" /><line x1="21" y1="21" x2="16.6" y2="16.6" /></svg>
+                            <input type="text" id="buscador" placeholder="Buscar área…" />
+                        </div>
+                        <button type="button" class="btn btn-accent" id="btn-nueva">+ Nueva área</button>
+                    </div>
+
+                    <div class="data-table-wrap">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Área operativa</th>
+                                    <th>Nivel de criticidad</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-body">
+                                <tr><td colspan="3" class="table-state">Cargando áreas…</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <dialog id="modal-area" class="legacy-dialog" aria-labelledby="modal-titulo">
+        <div class="modal-panel">
+            <h2 id="modal-titulo">Nueva área operativa</h2>
+            <p class="card-sub">Completa los datos del área.</p>
+
+            <div class="notice notice-error" id="modal-error" role="alert"></div>
+
+            <form id="form-area" novalidate>
+                <input type="hidden" id="f-id" />
+
+                <div class="field">
+                    <label for="f-nombre">Nombre</label>
+                    <input type="text" id="f-nombre" required />
+                </div>
+
+                <div class="field">
+                    <label for="f-criticidad">Nivel de criticidad</label>
+                    <select id="f-criticidad" required></select>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-ghost" id="modal-cancelar">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" id="modal-guardar">
+                        <span class="btn-label">Guardar</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+</dialog>
+
+</body>
+</html>
